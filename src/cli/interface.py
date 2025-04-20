@@ -5,6 +5,7 @@
 """
 
 import os
+import sys
 from typing import Any, Dict, Optional, List
 
 from ..core.config import ConfigManager
@@ -182,4 +183,29 @@ class CLI:
                 src_path = os.path.join(self.template_manager.template_dir, "notes", file)
                 dst_path = os.path.join(notes_dir, file)
                 if not os.path.exists(dst_path) or force:
-                    self.file_manager.copy_file(src_path, dst_path) 
+                    self.file_manager.copy_file(src_path, dst_path)
+
+def main():
+    """
+    メイン関数
+
+    Returns:
+        int: 終了コード
+    """
+    cli = CLI()
+    if len(sys.argv) < 2:
+        print("Usage: crules <command> [options]")
+        return 1
+    
+    command = sys.argv[1]
+    args = sys.argv[2:]
+    
+    try:
+        cli.run_command(command, *args)
+        return 0
+    except Exception as e:
+        print(f"Error: {e}")
+        return 1
+
+if __name__ == "__main__":
+    sys.exit(main()) 

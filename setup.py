@@ -8,6 +8,7 @@ setup(
     install_requires=[
         "click>=8.0.0",
         "pyyaml>=6.0.0",
+        "jinja2>=3.0.0",
     ],
     extras_require={
         "dev": [
@@ -19,7 +20,7 @@ setup(
     },
     entry_points={
         "console_scripts": [
-            "crules=cli.interface:main",
+            "crules=src.cli.interface:main",
         ],
     },
     python_requires=">=3.9",
@@ -28,7 +29,7 @@ setup(
     description="A tool for efficient project rule management",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/crules",
+    url="https://github.com/tirano-tirano/crules",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
