@@ -12,10 +12,10 @@ setup(
     ],
     extras_require={
         "dev": [
-            "pytest>=7.0.0",
-            "pytest-cov>=4.0.0",
-            "flake8>=4.0.0",
-            "mypy>=0.900",
+            "pytest==7.4.0",
+            "pytest-cov==4.1.0",
+            "flake8==6.1.0",
+            "mypy==1.5.1",
         ],
     },
     entry_points={
