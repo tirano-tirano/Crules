@@ -1,57 +1,57 @@
 # Changelog
 
-このプロジェクトの全ての重要な変更はこのファイルに記録されます。
+All notable changes to this project will be documented in this file.
 
-フォーマットは[Keep a Changelog](https://keepachangelog.com/ja/1.0.0/)に基づいており、
-バージョニングは[Semantic Versioning](https://semver.org/spec/v2.0.0.html)に従います。
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.2.0] - 2024-04-20
+
 ### Added
 
-- ルール管理のための基本ツール
-- CLI インターフェース
-- テンプレート管理機能
-- ファイル操作ユーティリティ
-- 設定管理機能
+- 基本的なルール管理ツールの実装
+- CLI インターフェースの実装
+- テンプレート管理機能の実装
+- ファイル操作ユーティリティの実装
+- 設定管理機能の実装
 
 ### Changed
 
-- GitHub Actions ワークフローの改善
-  - Python 3.1 ジョブの削除
-  - flake8 設定の更新
-  - カバレッジレポート生成の改善
+- GitHub Actions ワークフローの更新：Python 3.1 ジョブの削除と flake8 設定の更新
 
 ### Fixed
 
 - CLI テストの修正
-- 依存関係の競合解決
+- 依存関係の競合の解決
 
 ### Removed
 
-- Codecov 統合の削除（ローカルカバレッジレポートチェックに移行）
+- Codecov の統合を削除し、ローカルでのカバレッジレポート確認に変更
 
 ## [0.1.0] - 2024-04-20
 
-### 初期リリース
+### Added
 
 - 基本機能の実装
   - プロジェクトルールの管理
-  - テンプレートベースのルール展開
-  - コマンドラインインターフェース
+  - テンプレートの展開と管理
+  - 設定ファイルの処理
 - 主要コンポーネントの実装
-  - FileManager: ファイル操作
-  - ConfigManager: 設定管理
-  - TemplateManager: テンプレート管理
-  - CLI: コマンドライン処理
-- テストと CI/CD
+  - CLI インターフェース
+  - ファイル操作
+  - 設定管理
+  - テンプレート管理
+- テストと CI/CD プロセスの実装
   - ユニットテスト
   - GitHub Actions による自動化
-  - カバレッジレポート
-- ドキュメント
+  - コードカバレッジの追跡
+- ドキュメントの整備
   - README
-  - API 仕様
-  - 使用方法ガイド
+  - CONTRIBUTING
+  - CHANGELOG
 
-[Unreleased]: https://github.com/tirano-tirano/crules/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/tirano-tirano/crules/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/tirano-tirano/crules/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/tirano-tirano/crules/releases/tag/v0.1.0
