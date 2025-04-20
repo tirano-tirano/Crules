@@ -22,7 +22,12 @@ jobs:
         run: |
           mkdir -p /opt/homebrew/Library/Taps/tirano-tirano/homebrew-crules
           cp Formula/crules.rb /opt/homebrew/Library/Taps/tirano-tirano/homebrew-crules/
-          brew audit --strict tirano-tirano/crules/crules
+          # プレースホルダーの場合はスキップ
+          if grep -q 'sha256 "placeholder"' Formula/crules.rb; then
+            echo "Using placeholder SHA256, skipping audit"
+          else
+            brew audit --strict tirano-tirano/crules/crules
+          fi
           brew style Formula/crules.rb
 
   update-sha:

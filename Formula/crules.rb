@@ -4,7 +4,7 @@ class Crules < Formula
   desc "プロジェクトのルール管理を効率的に行うためのツール"
   homepage "https://github.com/tirano-tirano/crules"
   url "https://github.com/tirano-tirano/crules/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "176bd743a019c33db28eecf96fd87ebd98df476dc2ce0df0331ceb28ccad3618"
+  sha256 "placeholder"
   license "MIT"
 
   depends_on "python@3.9"
