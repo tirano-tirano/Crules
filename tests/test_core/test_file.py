@@ -7,7 +7,6 @@
 import os
 import tempfile
 import unittest
-from typing import List, Optional
 
 from src.core.file import FileManager
 

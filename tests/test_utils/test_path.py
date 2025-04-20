@@ -6,7 +6,6 @@
 
 import os
 import unittest
-from typing import Optional
 
 from src.utils.path import normalize_path, resolve_path, is_subpath
 
