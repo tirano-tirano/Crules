@@ -20,7 +20,8 @@ jobs:
 
       - name: Test Formula
         run: |
-          brew audit --strict crules
+          brew tap tirano-tirano/crules Formula
+          brew audit --strict tirano-tirano/crules/crules
           brew style Formula/crules.rb
 
   update-sha:
