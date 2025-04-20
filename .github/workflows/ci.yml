@@ -20,7 +20,7 @@ jobs:
 
       - name: Test Formula
         run: |
-          brew audit --strict Formula/crules.rb
+          brew audit --strict crules
           brew style Formula/crules.rb
 
   update-sha:
