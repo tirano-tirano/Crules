@@ -20,7 +20,8 @@ jobs:
 
       - name: Test Formula
         run: |
-          brew tap tirano-tirano/crules Formula
+          mkdir -p /opt/homebrew/Library/Taps/tirano-tirano/homebrew-crules
+          cp Formula/crules.rb /opt/homebrew/Library/Taps/tirano-tirano/homebrew-crules/
           brew audit --strict tirano-tirano/crules/crules
           brew style Formula/crules.rb
 
