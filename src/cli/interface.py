@@ -6,7 +6,7 @@
 
 import os
 import sys
-from typing import Any, Dict, Optional, List
+from typing import Any, Dict, List
 
 from ..core.config import ConfigManager
 from ..core.file import FileManager
