@@ -36,4 +36,13 @@ jobs:
         run: |
           flake8 --max-line-length=100 src tests
           bandit -r src
-          pytest tests/ -v
+          pytest --cov=src --cov-report=xml tests/
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage.xml
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
+          verbose: true
