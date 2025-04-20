@@ -23,7 +23,7 @@ jobs:
           mkdir -p /opt/homebrew/Library/Taps/tirano-tirano/homebrew-crules
           cp Formula/crules.rb /opt/homebrew/Library/Taps/tirano-tirano/homebrew-crules/
           # プレースホルダーの場合はスキップ
-          if grep -q 'sha256 "placeholder"' Formula/crules.rb; then
+          if grep -q 'sha256 "0000000000000000000000000000000000000000000000000000000000000000"' Formula/crules.rb; then
             echo "Using placeholder SHA256, skipping audit"
           else
             brew audit --strict tirano-tirano/crules/crules
@@ -44,7 +44,7 @@ jobs:
         run: |
           VERSION=${GITHUB_REF#refs/tags/}
           curl -L "https://github.com/tirano-tirano/crules/archive/refs/tags/${VERSION}.tar.gz" | shasum -a 256 | cut -d ' ' -f 1 > sha.txt
-          sed -i "s/sha256 \"placeholder\"/sha256 \"$(cat sha.txt)\"/" Formula/crules.rb
+          sed -i "s/sha256 \"0000000000000000000000000000000000000000000000000000000000000000\"/sha256 \"$(cat sha.txt)\"/" Formula/crules.rb
 
       - name: Commit and push changes
         run: |
