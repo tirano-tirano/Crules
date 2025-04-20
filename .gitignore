@@ -1,3 +1,8 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
 # Python
 __pycache__/
 *.py[cod]
@@ -32,14 +37,13 @@ env/
 *.swp
 *.swo
 
-# Testing
+# Test
 .coverage
-coverage.xml
-.pytest_cache/
 htmlcov/
+.pytest_cache/
+.tox/
 
 # OS
-.DS_Store
 .DS_Store?
 ._*
 .Spotlight-V100
