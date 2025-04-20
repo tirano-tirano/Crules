@@ -26,4 +26,4 @@ class Crules < Formula
   test do
     system bin/"crules", "--version"
   end
-end 
+end
