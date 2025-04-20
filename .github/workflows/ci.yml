@@ -36,4 +36,4 @@ jobs:
         run: |
           flake8 --max-line-length=100 src tests
           bandit -r src
-          pytest tests/ --no-cov
+          pytest tests/ -v
