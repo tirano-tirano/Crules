@@ -5,7 +5,7 @@
 """
 
 import os
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, cast
 
 from ..core.config import ConfigManager
 from ..core.file import FileManager
@@ -61,8 +61,8 @@ class InitCommand(BaseCommand):
         Returns:
             bool: コマンドの実行結果
         """
-        project_name = args.get("project_name")
-        force = args.get("force", False)
+        project_name = cast(str, args.get("project_name"))
+        force = bool(args.get("force", False))
 
         # プロジェクトルートを検出
         project_root = self.file_manager.detect_project_root()
@@ -76,12 +76,11 @@ class InitCommand(BaseCommand):
         # テンプレートを展開
         rules_dir = os.path.join(project_root, ".cursor", "rules")
         self.file_manager.create_directory(rules_dir)
-        for file in os.listdir(
-            os.path.join(self.template_manager.template_dir, "rules")
-        ):
-            src = os.path.join(self.template_manager.template_dir, "rules", file)
+        template_manager = cast(TemplateManager, self.template_manager)
+        for file in os.listdir(os.path.join(template_manager.template_dir, "rules")):
+            src = os.path.join(template_manager.template_dir, "rules", file)
             dst = os.path.join(rules_dir, file)
-            self.template_manager.expand_template(src, dst, force)
+            template_manager.expand_template(src, dst, force)
         return True
 
 
@@ -101,9 +100,9 @@ class AddCommand(BaseCommand):
         Returns:
             bool: コマンドの実行結果
         """
-        rule_name = args.get("rule_name")
-        template = args.get("template")
-        force = args.get("force", False)
+        rule_name = cast(str, args.get("rule_name"))
+        template = cast(str, args.get("template"))
+        force = bool(args.get("force", False))
 
         # プロジェクトルートを検出
         project_root = self.file_manager.detect_project_root()
@@ -113,6 +112,8 @@ class AddCommand(BaseCommand):
         # テンプレートを展開
         rules_dir = os.path.join(project_root, ".cursor", "rules")
         self.file_manager.create_directory(rules_dir)
+        if not self.template_manager:
+            raise ValueError("Template manager is not initialized")
         src = os.path.join(
             project_root, ".crules", "templates", template, "rules", f"{rule_name}.yaml"
         )
@@ -141,7 +142,7 @@ class ListCommand(BaseCommand):
 
         # ルールファイルを一覧表示
         rules_dir = os.path.join(project_root, ".cursor", "rules")
-        files = self.file_manager.listdir(rules_dir)
+        files = os.listdir(rules_dir)
         for file in files:
             if file.endswith(".yaml"):
                 print(f"- {file[:-5]}")
