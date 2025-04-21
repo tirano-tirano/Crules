@@ -77,7 +77,7 @@ class InitCommand(BaseCommand):
         rules_dir = os.path.join(project_root, ".cursor", "rules")
         self.file_manager.create_directory(rules_dir)
         template_manager = cast(TemplateManager, self.template_manager)
-        for file in os.listdir(os.path.join(template_manager.template_dir, "rules")):
+        for file in self.file_manager.listdir(os.path.join(template_manager.template_dir, "rules")):
             src = os.path.join(template_manager.template_dir, "rules", file)
             dst = os.path.join(rules_dir, file)
             template_manager.expand_template(src, dst, {"force": force})

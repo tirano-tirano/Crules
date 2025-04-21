@@ -27,12 +27,11 @@ class TestInitCommand(unittest.TestCase):
             template_manager=self.mock_template,
         )
 
-    @patch("os.listdir")
-    def test_execute(self, mock_listdir):
+    def test_execute(self):
         """コマンド実行のテスト"""
         # 正常な実行
         self.mock_file.detect_project_root.return_value = "/test/project"
-        mock_listdir.return_value = ["test_rule.yaml"]
+        self.mock_file.listdir.return_value = ["test_rule.yaml"]
         args = {"project_name": "test-project"}
         result = self.command.execute(args)
         self.assertTrue(result)
