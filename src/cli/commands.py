@@ -142,7 +142,7 @@ class ListCommand(BaseCommand):
 
         # ルールファイルを一覧表示
         rules_dir = os.path.join(project_root, ".cursor", "rules")
-        files = os.listdir(rules_dir)
+        files = self.file_manager.listdir(rules_dir)
         for file in files:
             if file.endswith(".yaml"):
                 print(f"- {file[:-5]}")
