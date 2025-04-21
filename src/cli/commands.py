@@ -80,7 +80,7 @@ class InitCommand(BaseCommand):
         for file in os.listdir(os.path.join(template_manager.template_dir, "rules")):
             src = os.path.join(template_manager.template_dir, "rules", file)
             dst = os.path.join(rules_dir, file)
-            template_manager.expand_template(src, dst, force)
+            template_manager.expand_template(src, dst, {"force": force})
         return True
 
 
@@ -118,7 +118,7 @@ class AddCommand(BaseCommand):
             project_root, ".crules", "templates", template, "rules", f"{rule_name}.yaml"
         )
         dst = os.path.join(rules_dir, f"{rule_name}.yaml")
-        self.template_manager.expand_template(src, dst, force)
+        self.template_manager.expand_template(src, dst, {"force": force})
         return True
 
 

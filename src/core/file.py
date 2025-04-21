@@ -6,7 +6,7 @@
 
 import os
 import shutil
-from typing import Optional
+from typing import Optional, List
 
 
 class FileManager:
@@ -60,6 +60,19 @@ class FileManager:
             dir_path: ディレクトリパス
         """
         os.makedirs(dir_path, exist_ok=True)
+
+    @staticmethod
+    def listdir(dir_path: str) -> List[str]:
+        """
+        ディレクトリの内容を一覧表示する
+
+        Args:
+            dir_path: ディレクトリパス
+
+        Returns:
+            ディレクトリの内容のリスト
+        """
+        return os.listdir(dir_path)
 
     @staticmethod
     def detect_project_root(start_path: str = ".") -> Optional[str]:
