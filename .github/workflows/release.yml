@@ -20,7 +20,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check version change
         id: check
@@ -77,6 +76,11 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
       - name: Create tag and release
         run: |
           VERSION="${{ needs.check-version.outputs.version }}"
@@ -93,3 +97,59 @@ jobs:
           draft: false
           prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
+
+  test-formula-update:
+    needs: create-release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      - name: Check environment
+        run: |
+          echo "OS: $(uname -a)"
+          echo "Homebrew version: $(brew --version || echo 'Not installed')"
+          echo "Python version: $(python --version)"
+          echo "Git version: $(git --version)"
+          echo "Available commands:"
+          which brew python git curl shasum
+
+      - name: Checkout homebrew-crules
+        uses: actions/checkout@v4
+        with:
+          repository: tirano-tirano/homebrew-crules
+          token: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+          path: homebrew-crules
+
+      - name: Set up Homebrew
+        run: |
+          # Homebrewがインストールされているか確認
+          if ! command -v brew &> /dev/null; then
+            echo "Homebrewがインストールされていません。インストールを開始します..."
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> $GITHUB_ENV
+            eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          fi
+          brew update
+          brew install homebrew/cask/brew-cask
+
+      - name: Verify Formula
+        run: |
+          cd homebrew-crules
+          brew audit Formula/crules.rb
+          brew style Formula/crules.rb
+
+      - name: Test Installation
+        run: |
+          cd homebrew-crules
+          brew install ./Formula/crules.rb
+          crules --version
+          # バージョンの確認
+          INSTALLED_VERSION=$(crules --version | cut -d' ' -f2)
+          EXPECTED_VERSION="${{ needs.check-version.outputs.version }}"
+          if [ "$INSTALLED_VERSION" != "$EXPECTED_VERSION" ]; then
+            echo "インストールされたバージョン ($INSTALLED_VERSION) が期待されるバージョン ($EXPECTED_VERSION) と一致しません"
+            exit 1
+          fi
