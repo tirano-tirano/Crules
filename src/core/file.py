@@ -6,7 +6,7 @@
 
 import os
 import shutil
-from typing import Optional, List
+from typing import List, Optional
 
 
 class FileManager:
