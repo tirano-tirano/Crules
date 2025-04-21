@@ -5,7 +5,7 @@ CLIコマンドのテスト
 """
 
 import unittest
-from unittest.mock import MagicMock, PropertyMock, patch
+from unittest.mock import MagicMock, PropertyMock
 
 from src.cli.commands import AddCommand, InitCommand, ListCommand
 
