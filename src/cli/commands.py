@@ -70,12 +70,8 @@ class InitCommand(BaseCommand):
             raise ValueError("Project root not found")
 
         # テンプレートディレクトリを設定
-        template_dir = os.path.join(
-            project_root, ".crules", "templates", project_name
-        )
-        self.template_manager = self.template_manager or TemplateManager(
-            template_dir
-        )
+        template_dir = os.path.join(project_root, ".crules", "templates", project_name)
+        self.template_manager = self.template_manager or TemplateManager(template_dir)
 
         # テンプレートを展開
         rules_dir = os.path.join(project_root, ".cursor", "rules")
