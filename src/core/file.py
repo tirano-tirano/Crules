@@ -77,4 +77,4 @@ class FileManager:
             if os.path.exists(os.path.join(current_path, ".crules")):
                 return current_path
             current_path = os.path.dirname(current_path)
-        return None 
+        return None

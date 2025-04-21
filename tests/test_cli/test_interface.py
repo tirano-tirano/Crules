@@ -8,7 +8,7 @@ import os
 import sys
 import unittest
 from unittest import TestCase
-from unittest.mock import MagicMock, patch, call
+from unittest.mock import MagicMock, call, patch
 
 from src.cli.interface import CLI, CommandInterface, main
 
@@ -108,7 +108,9 @@ class TestCLI(TestCase):
     def test_init_command(self, mock_listdir, mock_join):
         """_init_commandメソッドのテスト"""
         # パスの結合をモック
-        template_path = os.path.join(self.project_root, ".crules", "templates", "test_template")
+        template_path = os.path.join(
+            self.project_root, ".crules", "templates", "test_template"
+        )
         rules_path = os.path.join(self.project_root, ".cursor", "rules")
         notes_path = os.path.join(self.project_root, ".notes")
         template_rules_path = os.path.join(template_path, "rules")
@@ -141,7 +143,9 @@ class TestCLI(TestCase):
             self.cli._init_command("test_template", force=True)
 
             # 検証
-            self.mock_file_manager.detect_project_root.assert_has_calls([call(), call()])
+            self.mock_file_manager.detect_project_root.assert_has_calls(
+                [call(), call()]
+            )
             mock_template_manager_class.assert_called_once_with(template_path)
             self.assertEqual(self.cli.template_manager, mock_template_manager)
 
@@ -150,10 +154,14 @@ class TestCLI(TestCase):
     def test_deploy_command(self, mock_listdir, mock_join):
         """_deploy_commandメソッドのテスト"""
         # 設定のモック
-        self.mock_config_manager.load_config.return_value = {"template_name": "test_template"}
+        self.mock_config_manager.load_config.return_value = {
+            "template_name": "test_template"
+        }
 
         # パスの結合をモック
-        template_path = os.path.join(self.project_root, ".crules", "templates", "test_template")
+        template_path = os.path.join(
+            self.project_root, ".crules", "templates", "test_template"
+        )
         rules_path = os.path.join(self.project_root, ".cursor", "rules")
         notes_path = os.path.join(self.project_root, ".notes")
         template_rules_path = os.path.join(template_path, "rules")
@@ -186,7 +194,9 @@ class TestCLI(TestCase):
             self.cli._deploy_command(force=True)
 
             # 検証
-            self.mock_file_manager.detect_project_root.assert_has_calls([call(), call()])
+            self.mock_file_manager.detect_project_root.assert_has_calls(
+                [call(), call()]
+            )
             self.mock_config_manager.load_config.assert_called_once()
             mock_template_manager_class.assert_called_once_with(template_path)
             self.assertEqual(self.cli.template_manager, mock_template_manager)
@@ -266,4 +276,4 @@ class TestMain(TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main() 
+    unittest.main()

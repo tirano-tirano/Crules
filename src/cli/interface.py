@@ -83,6 +83,7 @@ class CommandInterface:
         """
         return list(self.commands.keys())
 
+
 class CLI:
     """CLIクラス"""
 
@@ -168,9 +169,13 @@ class CLI:
         # ルールファイルを展開
         rules_dir = os.path.join(project_root, ".cursor", "rules")
         self.file_manager.create_directory(rules_dir)
-        for file in os.listdir(os.path.join(self.template_manager.template_dir, "rules")):
+        for file in os.listdir(
+            os.path.join(self.template_manager.template_dir, "rules")
+        ):
             if file.endswith(".md"):
-                src_path = os.path.join(self.template_manager.template_dir, "rules", file)
+                src_path = os.path.join(
+                    self.template_manager.template_dir, "rules", file
+                )
                 dst_path = os.path.join(rules_dir, file.replace(".md", ".mdc"))
                 if not os.path.exists(dst_path) or force:
                     self.file_manager.copy_file(src_path, dst_path)
@@ -178,12 +183,17 @@ class CLI:
         # ノートファイルを展開
         notes_dir = os.path.join(project_root, ".notes")
         self.file_manager.create_directory(notes_dir)
-        for file in os.listdir(os.path.join(self.template_manager.template_dir, "notes")):
+        for file in os.listdir(
+            os.path.join(self.template_manager.template_dir, "notes")
+        ):
             if file.endswith(".md"):
-                src_path = os.path.join(self.template_manager.template_dir, "notes", file)
+                src_path = os.path.join(
+                    self.template_manager.template_dir, "notes", file
+                )
                 dst_path = os.path.join(notes_dir, file)
                 if not os.path.exists(dst_path) or force:
                     self.file_manager.copy_file(src_path, dst_path)
+
 
 def main():
     """
@@ -196,10 +206,10 @@ def main():
     if len(sys.argv) < 2:
         print("Usage: crules <command> [options]")
         return 1
-    
+
     command = sys.argv[1]
     args = sys.argv[2:]
-    
+
     try:
         cli.run_command(command, *args)
         return 0
@@ -207,5 +217,6 @@ def main():
         print(f"Error: {e}")
         return 1
 
+
 if __name__ == "__main__":
-    sys.exit(main()) 
+    sys.exit(main())

@@ -38,9 +38,7 @@ class TemplateManager:
         """
         return self.env.get_template(template_name)
 
-    def process_template(
-        self, template_name: str, context: Dict[str, Any]
-    ) -> str:
+    def process_template(self, template_name: str, context: Dict[str, Any]) -> str:
         """
         テンプレートを処理する
 
@@ -87,4 +85,4 @@ class TemplateManager:
             self.load_template(template_name)
             return True
         except Exception:
-            return False 
+            return False

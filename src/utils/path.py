@@ -50,4 +50,4 @@ def is_subpath(path: str, base_path: str) -> bool:
     """
     path = normalize_path(path)
     base_path = normalize_path(base_path)
-    return path.startswith(base_path) 
+    return path.startswith(base_path)

@@ -65,4 +65,4 @@ class ConfigManager:
             value: 設定値
         """
         self.config[key] = value
-        self.save_config() 
+        self.save_config()

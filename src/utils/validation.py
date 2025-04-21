@@ -23,7 +23,12 @@ def validate_path(path: str) -> bool:
         return False
     try:
         normalized = os.path.normpath(path)
-        return bool(normalized) and normalized != "/" and normalized != "//" and "\0" not in normalized
+        return (
+            bool(normalized)
+            and normalized != "/"
+            and normalized != "//"
+            and "\0" not in normalized
+        )
     except Exception:
         return False
 
@@ -56,4 +61,4 @@ def validate_config(config: Dict[str, Any]) -> bool:
     """
     if not config or not isinstance(config, dict):
         return False
-    return "template_name" in config 
+    return "template_name" in config

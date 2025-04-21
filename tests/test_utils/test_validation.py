@@ -5,7 +5,9 @@
 """
 
 import unittest
-from src.utils.validation import validate_path, validate_name, validate_config
+
+from src.utils.validation import validate_config, validate_name, validate_path
+
 
 class TestValidation(unittest.TestCase):
     """バリデーション機能のテストクラス"""
@@ -45,18 +47,16 @@ class TestValidation(unittest.TestCase):
         valid_config = {
             "template_name": "test-template",
             "description": "Test template",
-            "version": "1.0.0"
+            "version": "1.0.0",
         }
         self.assertTrue(validate_config(valid_config))
 
         # 異常な設定
-        invalid_config = {
-            "description": "Test template",
-            "version": "1.0.0"
-        }
+        invalid_config = {"description": "Test template", "version": "1.0.0"}
         self.assertFalse(validate_config(invalid_config))
         self.assertFalse(validate_config({}))
         self.assertFalse(validate_config(None))
 
+
 if __name__ == "__main__":
-    unittest.main() 
+    unittest.main()

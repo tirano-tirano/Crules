@@ -5,8 +5,10 @@ CLIコマンドのテスト
 """
 
 import unittest
-from unittest.mock import patch, MagicMock, PropertyMock
-from src.cli.commands import InitCommand, AddCommand, ListCommand
+from unittest.mock import MagicMock, PropertyMock, patch
+
+from src.cli.commands import AddCommand, InitCommand, ListCommand
+
 
 class TestInitCommand(unittest.TestCase):
     """初期化コマンドのテストクラス"""
@@ -16,14 +18,16 @@ class TestInitCommand(unittest.TestCase):
         self.mock_file = MagicMock()
         self.mock_config = MagicMock()
         self.mock_template = MagicMock()
-        type(self.mock_template).template_dir = PropertyMock(return_value="/test/templates")
+        type(self.mock_template).template_dir = PropertyMock(
+            return_value="/test/templates"
+        )
         self.command = InitCommand(
             config_manager=self.mock_config,
             file_manager=self.mock_file,
-            template_manager=self.mock_template
+            template_manager=self.mock_template,
         )
 
-    @patch('os.listdir')
+    @patch("os.listdir")
     def test_execute(self, mock_listdir):
         """コマンド実行のテスト"""
         # 正常な実行
@@ -39,6 +43,7 @@ class TestInitCommand(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.command.execute(args)
 
+
 class TestAddCommand(unittest.TestCase):
     """追加コマンドのテストクラス"""
 
@@ -47,8 +52,7 @@ class TestAddCommand(unittest.TestCase):
         self.mock_file = MagicMock()
         self.mock_template = MagicMock()
         self.command = AddCommand(
-            file_manager=self.mock_file,
-            template_manager=self.mock_template
+            file_manager=self.mock_file, template_manager=self.mock_template
         )
 
     def test_execute(self):
@@ -64,6 +68,7 @@ class TestAddCommand(unittest.TestCase):
         self.mock_file.detect_project_root.return_value = None
         with self.assertRaises(ValueError):
             self.command.execute(args)
+
 
 class TestListCommand(unittest.TestCase):
     """一覧コマンドのテストクラス"""
@@ -88,5 +93,6 @@ class TestListCommand(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.command.execute({})
 
+
 if __name__ == "__main__":
-    unittest.main() 
+    unittest.main()

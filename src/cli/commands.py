@@ -15,9 +15,12 @@ from ..core.template import TemplateManager
 class BaseCommand:
     """基底コマンドクラス"""
 
-    def __init__(self, config_manager: Optional[ConfigManager] = None,
-                 file_manager: Optional[FileManager] = None,
-                 template_manager: Optional[TemplateManager] = None):
+    def __init__(
+        self,
+        config_manager: Optional[ConfigManager] = None,
+        file_manager: Optional[FileManager] = None,
+        template_manager: Optional[TemplateManager] = None,
+    ):
         """
         初期化
 
@@ -73,7 +76,9 @@ class InitCommand(BaseCommand):
         # テンプレートを展開
         rules_dir = os.path.join(project_root, ".cursor", "rules")
         self.file_manager.create_directory(rules_dir)
-        for file in os.listdir(os.path.join(self.template_manager.template_dir, "rules")):
+        for file in os.listdir(
+            os.path.join(self.template_manager.template_dir, "rules")
+        ):
             src = os.path.join(self.template_manager.template_dir, "rules", file)
             dst = os.path.join(rules_dir, file)
             self.template_manager.expand_template(src, dst, force)
@@ -108,7 +113,9 @@ class AddCommand(BaseCommand):
         # テンプレートを展開
         rules_dir = os.path.join(project_root, ".cursor", "rules")
         self.file_manager.create_directory(rules_dir)
-        src = os.path.join(project_root, ".crules", "templates", template, "rules", f"{rule_name}.yaml")
+        src = os.path.join(
+            project_root, ".crules", "templates", template, "rules", f"{rule_name}.yaml"
+        )
         dst = os.path.join(rules_dir, f"{rule_name}.yaml")
         self.template_manager.expand_template(src, dst, force)
         return True
@@ -138,4 +145,4 @@ class ListCommand(BaseCommand):
         for file in files:
             if file.endswith(".yaml"):
                 print(f"- {file[:-5]}")
-        return True 
+        return True
