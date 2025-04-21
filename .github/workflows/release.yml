@@ -8,6 +8,8 @@ on:
       - "src/**"
       - "setup.py"
       - "requirements.txt"
+    tags:
+      - "v*"
 
 jobs:
   check-version:
