@@ -10,46 +10,38 @@ on:
 
 jobs:
   test:
-    runs-on: macos-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Homebrew
-        uses: Homebrew/actions/setup-homebrew@master
-
-      - name: Test Formula
-        run: |
-          mkdir -p /opt/homebrew/Library/Taps/tirano-tirano/homebrew-crules
-          cp Formula/crules.rb /opt/homebrew/Library/Taps/tirano-tirano/homebrew-crules/
-          # プレースホルダーの場合はスキップ
-          if grep -q 'sha256 "0000000000000000000000000000000000000000000000000000000000000000"' Formula/crules.rb; then
-            echo "Using placeholder SHA256, skipping audit"
-          else
-            brew audit --strict tirano-tirano/crules/crules
-          fi
-          brew style Formula/crules.rb
-
-  update-sha:
-    needs: test
-    if: github.event_name == 'release'
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11"]
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          python-version: ${{ matrix.python-version }}
 
-      - name: Update SHA
+      - name: Install dependencies
         run: |
-          VERSION=${GITHUB_REF#refs/tags/}
-          curl -L "https://github.com/tirano-tirano/crules/archive/refs/tags/${VERSION}.tar.gz" | shasum -a 256 | cut -d ' ' -f 1 > sha.txt
-          sed -i "s/sha256 \"0000000000000000000000000000000000000000000000000000000000000000\"/sha256 \"$(cat sha.txt)\"/" Formula/crules.rb
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
 
-      - name: Commit and push changes
+      - name: Run tests
         run: |
-          git config --global user.name 'GitHub Actions'
-          git config --global user.email 'actions@github.com'
-          git add Formula/crules.rb
-          git commit -m "Update SHA for version ${GITHUB_REF#refs/tags/}"
-          git push
+          pytest tests/ --cov=src --cov-report=term-missing
+
+      - name: Check code format
+        run: |
+          black --check src tests
+          isort --check-only src tests
+
+      - name: Lint
+        run: |
+          flake8 src tests
+          mypy src tests
+
+      - name: Security check
+        run: |
+          bandit -r src/
